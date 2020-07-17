@@ -39,6 +39,13 @@
             "metadata": {
                 "description": "Key Vault Secret that contains a PFX certificate"
             }
+        },
+        "customHostname": {
+            "type": "string",
+            "defaultValue": "test.azureworkshop.cloud",
+            "metadata": {
+                "description": "The custom hostname that you wish to add."
+            }
         }
     },
     "functions": [],
@@ -114,6 +121,9 @@
             "name": "[parameters('certificateName')]",
             "apiVersion": "2019-08-01",
             "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/serverfarms', variables('app-plan-name'))]"
+            ],
             "properties": {
                 "keyVaultId": "[parameters('existingKeyVaultId')]",
                 "keyVaultSecretName": "[parameters('existingKeyVaultSecretName')]",
@@ -137,7 +147,7 @@
                 "serverFarmId": "[resourceId('Microsoft.Web/serverfarms', variables('app-plan-name'))]",
                 "hostNameSslStates": [
                     {
-                        "name": "azure-workshops.cloud",
+                        "name": "[parameters('customHostname')]",
                         "sslState": "SniEnabled",
                         "thumbprint": "[reference(resourceId('Microsoft.Web/certificates', parameters('certificateName'))).Thumbprint]",
                         "toUpdate": true
@@ -160,6 +170,19 @@
                     }
                 }
             ]
+        },
+        {
+            "type": "Microsoft.Web/sites/hostnameBindings",
+            "name": "[concat(variables('app-name'), '/', parameters('customHostname'))]",
+            "apiVersion": "2019-08-01",
+            "location": "[parameters('location')]",
+            "dependsOn": [
+                "[resourceId('Microsoft.Web/certificates', parameters('certificateName'))]"
+            ],
+            "properties": {
+                "sslState": "'SniEnabled'",
+                "thumbprint": "[reference(resourceId('Microsoft.Web/certificates', parameters('certificateName'))).Thumbprint]"
+            }
         }
     ],
     "outputs": {}
