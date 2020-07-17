@@ -3,10 +3,10 @@
     "contentVersion": "1.0.0.0",
     "parameters": {
         "siteName": {
-            "value": "fnappl6cj37fmprmpc"
+            "value": "arm-demo-web-app-prod"
         },
         "storageAccountName": {
-            "value": "l6cj37fmprmpcazfunctions"
+            "value": "armdemostorageprod"
         }
     }
 }
