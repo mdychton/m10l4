@@ -10,15 +10,19 @@ pool:
   vmImage: 'ubuntu-latest'
 
 steps:
+
 - task: AzureResourceManagerTemplateDeployment@3
   inputs:
     deploymentScope: 'Resource Group'
-    azureResourceManagerConnection: 'AZURE SPONSORSHIP(1)(279f98e7-bb11-40fb-92c5-237db9a32fb4)'
-    subscriptionId: '279f98e7-bb11-40fb-92c5-237db9a32fb4'
+    azureResourceManagerConnection: 'Subscription1(1)(ac42974e-97b9-4f70-a1e9-5d82adb805b3)'
+    subscriptionId: 'ac42974e-97b9-4f70-a1e9-5d82adb805b3'
     action: 'Create Or Update Resource Group'
-    resourceGroupName: 'arm-demo'
-    location: 'North Europe'
+    resourceGroupName: 'arm-demo-prod'
+    location: 'West Europe'
     templateLocation: 'Linked artifact'
+    csmFile: 'function-app.json'
+    csmParametersFile: 'function-app.paramiters.json'
+    deploymentMode: 'Incremental'
     csmFile: 'web-app-sql.json'
     csmParametersFile: 'web-app-sql.parameters.json'
     deploymentMode: 'Validation'
