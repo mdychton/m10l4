@@ -23,6 +23,5 @@ steps:
     csmFile: 'function-app.json'
     csmParametersFile: 'function-app.paramiters.json'
     deploymentMode: 'Incremental'
-    csmFile: 'web-app-sql.json'
-    csmParametersFile: 'web-app-sql.parameters.json'
-    deploymentMode: 'Validation'
+
+
